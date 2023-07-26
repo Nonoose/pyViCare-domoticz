@@ -33,7 +33,7 @@ If you run Linux and the plugin does not show up in the hardware list, you may h
 https://www.domoticz.com/wiki/Using_Python_plugins
 
 # Requirements
-- This plugin requires python v3.8 (or greater)
+- This plugin requires python v3.9 (or greater)
 - It uses python requests and simplejson modules to send and receive json content to panasonic cloud. If you don't have them execute `pip3 install requests` and `pip3 install simplejson` as root to install.
 
 To use PyViCare, every user has to register and create their private API key. Follow these steps to create your API key:
