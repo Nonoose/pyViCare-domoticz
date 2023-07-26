@@ -37,7 +37,7 @@ This plugin requires python v3.9 (or greater)
 
 To use PyViCare, every user has to register and create their private API key. Follow these steps to create your API key:
 
-1. Login to the Viessmann Developer Portal with your existing ViCare username from the ViCare app.
+1. Login to the [Viessmann Developer Portal](https://developer.viessmann.com/start.html) with your existing ViCare username from the ViCare app.
 2. In the menu navigate to API Keys.
 3. Create a new OAuth client using following data:
    * Name: PyViCare
