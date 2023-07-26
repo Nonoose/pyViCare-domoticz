@@ -13,6 +13,7 @@
     <params>
         <param field="Username" label="Username" width="300px" required="false" default=""/>
         <param field="Password" label="Password" width="300px" required="false" default="" password="true"/>
+        <param field="Client_id" label="Client_id" width="300px" required="false" default=""/>
         <param field="Mode6" label="Debug" width="75px">
             <options>
                 <option label="Verbose" value="Verbose"/>
