@@ -14,11 +14,16 @@
         <param field="Username" label="Username" width="300px" required="false" default=""/>
         <param field="Password" label="Password" width="300px" required="false" default="" password="true"/>
         <param field="Client_id" label="Client_id" width="300px" required="false" default=""/>
-        <param field="Mode6" label="Debug" width="75px">
+        <param field="Mode6" label="Debug" width="150px">
             <options>
-                <option label="Verbose" value="Verbose"/>
-                <option label="True" value="Debug"/>
-                <option label="False" value="Normal" default="true" />
+                <option label="None" value="0"  default="true" />
+                <option label="Python Only" value="2"/>
+                <option label="Basic Debugging" value="62"/>
+                <option label="Basic+Messages" value="126"/>
+                <option label="Queue" value="128"/>
+                <option label="Connections Only" value="16"/>
+                <option label="Connections+Queue" value="144"/>
+                <option label="All" value="-1"/>
             </options>
         </param>
     </params>
