@@ -20,6 +20,7 @@
                 <option label="False" value="Normal" default="true" />
             </options>
         </param>
+    </params>
 </plugin>
 """
 import DomoticzEx as Domoticz
