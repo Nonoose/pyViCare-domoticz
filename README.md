@@ -23,7 +23,7 @@ or
 ```
 sudo service domoticz.sh restart
 ```
-From here the plugin should be able to be set-up from the Domoticz interface. Go to the hardware page and look in the dropdown, you should find "PyViCare Domoticz implementation"
+From here the plugin should be able to be set-up from the Domoticz interface. Go to the hardware page and look in the dropdown, you should find "pyViCare-domoticz Viessmann API Plugin"
 
 If you run Linux and the plugin does not show up in the hardware list, you may have to make the plugin.py file executable. Go to the directory and execute the command:
 ```
@@ -33,7 +33,10 @@ If you run Linux and the plugin does not show up in the hardware list, you may h
 https://www.domoticz.com/wiki/Using_Python_plugins
 
 # Requirements
-This plugin requires python v3.9 (or greater)
+This plugin requires python v3.9 (or greater), and the python modules pyViCare and requests installed
+```
+pip install pyViCare requests
+```
 
 To use PyViCare, every user has to register and create their private API key. Follow these steps to create your API key:
 
