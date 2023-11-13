@@ -24,8 +24,15 @@ import sys
 import logging
 from PyViCare.PyViCare import PyViCare
 
+class VSensor:
+    def __init__(self, position, name, type):
+        self.position = position
+        self.name = name
+        self.type = type
+
 class BasePlugin:
     enabled = False
+
 
     def __init__(self):
         self.vicare = None
@@ -34,7 +41,7 @@ class BasePlugin:
         self.Password = ""
         self.update_interval = ""
         self.DEBUG = ""
-       
+
 
     def onStart(self):
         Domoticz.Log("onStart called")
@@ -54,6 +61,17 @@ class BasePlugin:
             return 
 
         try:
+            # Define all sensors :
+            sensor = [VSensor(1,"ExternalTemperature","Temperature")]
+            sensor.append(VSensor(2,"InternalTemperature","Temperature"))
+            sensor.append(VSensor(3,"HotWaterTemperature","Temperature"))
+            sensor.append(VSensor(4,"HotWaterSetTemperature","Temperature"))
+            sensor.append(VSensor(5,"HeaterTemperature","Temperature"))
+            sensor.append(VSensor(6,"HeaterSetTemperature","Temperature"))
+            sensor.append(VSensor(7,"BoilerTemperature","Temperature"))
+            sensor.append(VSensor(8,"Burner","Switch"))
+            sensor.append(VSensor(9,"HeaterProgram","Text"))
+
             self.vicare = PyViCare()
             self.vicare.initWithCredentials(self.Username, self.Password, self.client_id, os.path.join(os.path.expanduser('~'),"token.save"))
 
@@ -61,18 +79,26 @@ class BasePlugin:
 
             Domoticz.Log("Model: " + device.getModel())
             Domoticz.Log("Status: " + "Online" if device.isOnline() else "Offline") 
-          
+
             self.enabled = True
 
-            if len(Devices) == 0:
-                Domoticz.Device(Name="BuitenTemperatuurVoordeur", Unit=1, TypeName="Temperature", Used=1).Create()
+            # Create sensors if they don't exist
+            devs = Devices
+            for sens in sensor:
+                SensorExist = 0
+                for dev in devs:
+                  if (dev == sens.position):
+                    SensorExist = 1
+                if (SensorExist == 0):
+                  Domoticz.Device(Name=sens.name, Unit=sens.position, TypeName=sens.type, Used=1).Create()
+                  Domoticz.Log("Sensor ''" + sens.name + "'' created")
 
             Domoticz.Heartbeat(self.update_interval)
-            
+
         except Exception as e:
             Domoticz.Log("Failed to initialize pyViCare: {}".format(str(e)))
             self = None
-       
+
 
     def onStop(self):
         Domoticz.Log("onStop called")
@@ -95,32 +121,46 @@ class BasePlugin:
     def onHeartbeat(self):
         if self.vicare is not None:
             try:
-                # Fetch the data from Viessmann API using pyViCare
-                device = self.vicare.devices[0] 
-                vitovalor = device.asAutoDetectDevice()
-                # circuit = vitovalor.circuits[0]
-                # burner = vitovalor.burners[0]
+              # Fetch the data from Viessmann API using pyViCare
+              device = self.vicare.devices[0]
+              vitovalor = device.asOilBoiler()
+              circuit = vitovalor.circuits[0]
+              burner = vitovalor.burners[0]
 
-                outside_temp = vitovalor.getOutsideTemperature()
-                # inflow_temp = circuit.getSupplyTemperature()
-                # active_mode = circuit.getActiveProgram()
-                # burner_active = burner.getActive()
-
-                # print("Temp warmwater config: " + str(t.getDomesticHotWaterConfiguredTemperature()))
-                # print("Temp Opslag nu: " + str(t.getDomesticHotWaterStorageTemperature()))
-
-                Domoticz.Log("Outside temperature: " + str(outside_temp))
+              outside_temp = vitovalor.getOutsideTemperature()
+              if outside_temp is not None:
                 Devices[1].Update(nValue=0,sValue=str(outside_temp))
-                
-                # Domoticz.Log("Inflow temperature: " + str(inflow_temp))
-                # Domoticz.Log("Active mode: " + active_mode)
-                # Domoticz.Log("Burner active: " + str(burner_active))
-
+              inside_temp = circuit.getRoomTemperature()
+              if inside_temp is not None:
+                Devices[2].Update(nValue=0,sValue=str(inside_temp))
+              hotwater_temp = vitovalor.getDomesticHotWaterStorageTemperature()
+              if hotwater_temp is not None:
+                Devices[3].Update(nValue=0,sValue=str(hotwater_temp))
+              hotwater_desired_temp = vitovalor.getDomesticHotWaterConfiguredTemperature()
+              if hotwater_desired_temp is not None:
+                Devices[4].Update(nValue=0,sValue=str(hotwater_desired_temp))
+              heater_temp = circuit.getSupplyTemperature()
+              if heater_temp is not None:
+                Devices[5].Update(nValue=0,sValue=str(heater_temp))
+              heater_desired_temp = circuit.getCurrentDesiredTemperature()
+              if heater_desired_temp is not None:
+                Devices[6].Update(nValue=0,sValue=str(heater_desired_temp))
+              boiler_temp = vitovalor.getBoilerTemperature()
+              if boiler_temp is not None:
+                Devices[7].Update(nValue=0,sValue=str(boiler_temp))
+              burner_active = burner.getActive()
+              if burner_active is not None:
+                Devices[8].Update(nValue=0,sValue=burner_active[1])
+              active_mode = circuit.getActiveProgram()
+              if active_mode is not None:
+                Devices[9].Update(nValue=0,sValue=str(active_mode))
 
             except Exception as e:
                 Domoticz.Log("Error fetching data from Viessmann API: {}".format(str(e)))
+                return
         else:
             Domoticz.Log("pyViCare not initialized. Please check your Viessmann Username and Password in plugin settings.")
+            return
 
 # Define Domoticz log function
 def LogMessage(message):
