@@ -71,6 +71,7 @@ Enter following informations from the Viessman Developer Portal account you crea
 - Viessmann Email:	
 - Viessmann Password:	
 - Viessmann API client ID:
+
 Click "Add", and all sensors should be created and filled with informations
 
 # Compatibility
