@@ -1,8 +1,8 @@
 """
-<plugin key="pyViCare-domoticz" name="pyViCare-domoticz Viessmann API Plugin" author="wimmme" version="1.0.0" wikilink="https://www.domoticz.com/wiki/Developing_a_Python_plugin" externallink="https://github.com/somm15/PyViCare">
+<plugin key="pyViCare-domoticz" name="pyViCare-domoticz Viessmann API Plugin" author="Nonoose" version="1.0.0" wikilink="https://www.domoticz.com/wiki/Developing_a_Python_plugin" externallink="https://github.com/Nonoose/pyViCare-domoticz">
     <description>
         Domoticz plugin to access the Viessmann API using pyViCare library.
-        All credits to the makes of pyViCare, this plugin is just a wrappers for Domoticz
+        All credits to "somm15": creator of pyViCare and "wimmme": creator of the domoticz plugin, this plugin is just a fork to add sensors for my equipment
     </description>
     <params>
         <param field="Username" label="Viessmann Email" width="300px" required="true"/>

@@ -1,6 +1,19 @@
-# Domoticz python plugin for pyViCare, a python interface to the Viessmann API
+# Domoticz plugin for pyViCare, a python interface to the Viessmann API
 A Python plugin for Domoticz to communicate with the Viessmann API.
-It was designed to work with the Vitovalor PT2 but should work with all Viessmann devices.
+Just a fork from the great job of "wimmme" :
+https://github.com/wimmme/pyViCare-domoticz
+
+I've just changed the way sensors are added and programmed 9 of them :
+- ExternalTemperature
+- InternalTemperature
+- HotWaterTemperature
+- HotWaterSetTemperature
+- HeaterTemperature
+- HeaterSetTemperature
+- BoilerTemperature
+- Burner
+- HeaterProgram
+Programmed for my "Vitorondens 200-T" but should work for others
 
 # Getting started
 If you don't have git:
@@ -11,7 +24,7 @@ sudo apt-get install git
 Goto to the plugins directory of your domoticz installation folder and clone this repository:
 ```
 cd domoticz/plugins
-git clone https://github.com/wimmme/pyViCare-domoticz.git pyViCare-domoticz
+git clone https://github.com/Nonoose/pyViCare-domoticz.git pyViCare-domoticz
 ```
 So in this case the directory structure should now be: domoticz/plugins/pyViCare-domoticz/plugin.py
 
@@ -50,6 +63,15 @@ To use PyViCare, every user has to register and create their private API key. Fo
    * Copy the Client ID to use in your code. Pass it as constructor parameter to the device.
 
 (instructions copied from somm15: https://github.com/somm15/PyViCare)
+
+# Create a Hardware in Domoticz
+In Domoticz web UI, navigate to the Hardware page.
+Give a name to your Hardware and select "pyViCare-domoticz Viessmann API Plugin" type
+Enter following informations from the Viessman Developer Portal account you created above :
+- Viessmann Email:	
+- Viessmann Password:	
+- Viessmann API client ID:
+Click "Add", and all sensors should be created and filled with informations
 
 # Compatibility
 This script was tested with:
