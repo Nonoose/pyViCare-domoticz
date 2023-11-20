@@ -69,7 +69,7 @@ class BasePlugin:
             sensor.append(VSensor(5,"HeaterTemperature","Temperature"))
             sensor.append(VSensor(6,"HeaterSetTemperature","Temperature"))
             sensor.append(VSensor(7,"BoilerTemperature","Temperature"))
-            sensor.append(VSensor(8,"Burner","Switch"))
+            sensor.append(VSensor(8,"Burner","Text"))
             sensor.append(VSensor(9,"HeaterProgram","Text"))
 
             self.vicare = PyViCare()
@@ -126,32 +126,36 @@ class BasePlugin:
               vitovalor = device.asOilBoiler()
               circuit = vitovalor.circuits[0]
               burner = vitovalor.burners[0]
-
+              
+              # Store values from defined sensors
               outside_temp = vitovalor.getOutsideTemperature()
+              inside_temp = circuit.getRoomTemperature()
+              hotwater_temp = vitovalor.getDomesticHotWaterStorageTemperature()
+              hotwater_desired_temp = vitovalor.getDomesticHotWaterConfiguredTemperature()
+              heater_temp = circuit.getSupplyTemperature()
+              heater_desired_temp = circuit.getCurrentDesiredTemperature()
+              boiler_temp = vitovalor.getBoilerTemperature()
+              burner_active = burner.getActive()
+              active_mode = circuit.getActiveProgram()
+
               if outside_temp is not None:
                 Devices[1].Update(nValue=0,sValue=str(outside_temp))
-              inside_temp = circuit.getRoomTemperature()
               if inside_temp is not None:
                 Devices[2].Update(nValue=0,sValue=str(inside_temp))
-              hotwater_temp = vitovalor.getDomesticHotWaterStorageTemperature()
               if hotwater_temp is not None:
                 Devices[3].Update(nValue=0,sValue=str(hotwater_temp))
-              hotwater_desired_temp = vitovalor.getDomesticHotWaterConfiguredTemperature()
               if hotwater_desired_temp is not None:
                 Devices[4].Update(nValue=0,sValue=str(hotwater_desired_temp))
-              heater_temp = circuit.getSupplyTemperature()
               if heater_temp is not None:
                 Devices[5].Update(nValue=0,sValue=str(heater_temp))
-              heater_desired_temp = circuit.getCurrentDesiredTemperature()
               if heater_desired_temp is not None:
                 Devices[6].Update(nValue=0,sValue=str(heater_desired_temp))
-              boiler_temp = vitovalor.getBoilerTemperature()
               if boiler_temp is not None:
                 Devices[7].Update(nValue=0,sValue=str(boiler_temp))
-              burner_active = burner.getActive()
-              if burner_active is not None:
-                Devices[8].Update(nValue=0,sValue=burner_active[1])
-              active_mode = circuit.getActiveProgram()
+              if burner_active is True:
+                Devices[8].Update(nValue=0,sValue="On")
+              if burner_active is False:
+                Devices[8].Update(nValue=0,sValue="Off")
               if active_mode is not None:
                 Devices[9].Update(nValue=0,sValue=str(active_mode))
 
