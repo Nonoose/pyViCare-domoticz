@@ -13,6 +13,7 @@ I've just changed the way sensors are added and programmed 9 of them :
 - BoilerTemperature
 - Burner
 - HeaterProgram
+  
 Programmed for my "Vitorondens 200-T" but should work for others
 
 # Getting started
