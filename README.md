@@ -16,13 +16,31 @@ I've just changed the way sensors are added and programmed 9 of them :
   
 Programmed for my "Vitorondens 200-T" but should work for others
 
-# Getting started
+# Requirements
 If you don't have git:
 ```
 sudo apt-get update
 sudo apt-get install git
 ```
-Goto to the plugins directory of your domoticz installation folder and clone this repository:
+This plugin requires "python v3.9" (or greater), "pip" and the python modules "pyViCare", "requests" and "cryptography" installed
+IMPORTANT : Does not work with cryptography plugin version after 40.0.2
+If you don't have pyhton :
+```
+sudo apt-get update
+sudo apt-get install python
+```
+If you don't have pip :
+```
+sudo apt-get update
+sudo apt-get install python3-pip
+```
+Install python modules using pip :
+```
+pip install pyViCare requests cryptography==40.0.2
+```
+
+# Getting started
+Go to the plugins directory of your domoticz installation folder and clone this repository:
 ```
 cd domoticz/plugins
 git clone https://github.com/Nonoose/pyViCare-domoticz.git pyViCare-domoticz
@@ -45,12 +63,6 @@ If you run Linux and the plugin does not show up in the hardware list, you may h
 ```
 
 https://www.domoticz.com/wiki/Using_Python_plugins
-
-# Requirements
-This plugin requires python v3.9 (or greater), and the python modules pyViCare and requests installed
-```
-pip install pyViCare requests
-```
 
 To use PyViCare, every user has to register and create their private API key. Follow these steps to create your API key:
 
@@ -79,4 +91,4 @@ Click "Add", and all sensors should be created and filled with informations
 This script was tested with:
 * Domoticz Version: 2023.2
 * Python Version: 3.9
-* Raspbian GNU/Linux 11 (bullseye)
+* Raspbian GNU/Linux 12 (bullseye)
